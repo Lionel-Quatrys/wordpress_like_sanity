@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# Sanity local cache/build artifacts
+.sanity/
+.sanity-cache/
+.sanity-runtime/
+
+# Build outputs
+dist/
+build/
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS files
+.DS_Store
+
+# Editor/IDE local settings
+.vscode/
+.idea/

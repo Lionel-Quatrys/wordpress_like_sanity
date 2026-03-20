@@ -1,0 +1,23 @@
+{
+  "name": "wordpress-like-sanity-studio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "sanity dev",
+    "start": "sanity start",
+    "build": "sanity build",
+    "deploy": "sanity deploy"
+  },
+  "dependencies": {
+    "@sanity/icons": "^3.7.2",
+    "@sanity/vision": "^3.65.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "sanity": "^3.65.0",
+    "styled-components": "^6.3.12"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}
