@@ -1,11 +1,14 @@
+import { HomeIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
-export const pageType = defineType({
-  name: "page",
-  title: "Page",
+export const homepageType = defineType({
+  name: "homepage",
+  title: "Page d'accueil",
   type: "document",
+  icon: HomeIcon,
   groups: [
     { name: "content", title: "Contenu", default: true },
+    { name: "posts", title: "Articles" },
     { name: "seo", title: "SEO" },
     { name: "ai", title: "IA" },
     { name: "settings", title: "Reglages" },
@@ -13,16 +16,11 @@ export const pageType = defineType({
   fields: [
     defineField({
       name: "title",
-      title: "Titre",
+      title: "Titre interne",
       type: "string",
       group: "content",
-      validation: (Rule) => Rule.required().min(3).max(120),
-    }),
-    defineField({
-      name: "slug",
-      title: "Slug",
-      type: "slugObject",
-      group: "settings",
+      description: "Titre utilise uniquement dans le studio (non affiche sur le site).",
+      initialValue: "Page d'accueil",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -40,7 +38,37 @@ export const pageType = defineType({
         defineArrayMember({ type: "contactSection" }),
         defineArrayMember({ type: "testimonialsSection" }),
       ],
-      validation: (Rule) => Rule.required().min(1),
+    }),
+    defineField({
+      name: "featuredPosts",
+      title: "Articles mis en avant",
+      type: "array",
+      group: "posts",
+      description: "Selectionnez les articles a mettre en avant sur la page d'accueil.",
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [{ type: "post" }],
+        }),
+      ],
+      validation: (Rule) => Rule.unique().max(6),
+    }),
+    defineField({
+      name: "showLatestPosts",
+      title: "Afficher les derniers articles",
+      type: "boolean",
+      group: "posts",
+      description: "Affiche automatiquement les derniers articles publies sur la page d'accueil.",
+      initialValue: true,
+    }),
+    defineField({
+      name: "latestPostsCount",
+      title: "Nombre d'articles recents a afficher",
+      type: "number",
+      group: "posts",
+      initialValue: 3,
+      hidden: ({ document }) => !document?.showLatestPosts,
+      validation: (Rule) => Rule.min(1).max(12).integer(),
     }),
     defineField({
       name: "seo",
@@ -54,7 +82,7 @@ export const pageType = defineType({
       type: "aiMetadata",
       group: "ai",
       initialValue: {
-        structuredDataType: "WebPage",
+        structuredDataType: "WebSite",
         allowLlmIndexing: true,
       },
     }),
@@ -69,12 +97,12 @@ export const pageType = defineType({
   preview: {
     select: {
       title: "title",
-      slug: "slug.current",
       sectionCount: "content",
     },
-    prepare: ({ title, slug, sectionCount }) => ({
-      title: title || "Page sans titre",
-      subtitle: `/${slug || "sans-slug"} - ${sectionCount?.length || 0} section(s)`,
+    prepare: ({ title, sectionCount }) => ({
+      title: title || "Page d'accueil",
+      subtitle: `${sectionCount?.length || 0} section(s)`,
+      media: HomeIcon,
     }),
   },
 });

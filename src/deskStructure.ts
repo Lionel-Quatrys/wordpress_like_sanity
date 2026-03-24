@@ -1,7 +1,10 @@
 import {
   CogIcon,
+  DocumentIcon,
   DocumentsIcon,
+  ErrorOutlineIcon,
   HomeIcon,
+  StarIcon,
   TagIcon,
   UsersIcon,
 } from "@sanity/icons";
@@ -11,16 +14,36 @@ export const deskStructure = (S: StructureBuilder) =>
   S.list()
     .title("Contenu")
     .items([
-      S.documentTypeListItem("page").title("Pages").icon(HomeIcon),
+      S.listItem()
+        .title("Page d'accueil")
+        .icon(HomeIcon)
+        .child(
+          S.document()
+            .schemaType("homepage")
+            .documentId("homepage")
+            .title("Page d'accueil"),
+        ),
+      S.divider(),
+      S.documentTypeListItem("page").title("Pages").icon(DocumentIcon),
       S.documentTypeListItem("post").title("Articles").icon(DocumentsIcon),
       S.documentTypeListItem("category").title("Categories").icon(TagIcon),
       S.documentTypeListItem("author").title("Auteurs").icon(UsersIcon),
+      S.documentTypeListItem("testimonial").title("Temoignages").icon(StarIcon),
       S.divider(),
       S.listItem()
         .title("Medias")
         .child(S.documentTypeList("sanity.imageAsset").title("Medias")),
       S.divider(),
       S.documentTypeListItem("navigation").title("Navigation"),
+      S.listItem()
+        .title("Page 404")
+        .icon(ErrorOutlineIcon)
+        .child(
+          S.document()
+            .schemaType("notFound")
+            .documentId("notFound")
+            .title("Page 404"),
+        ),
       S.listItem()
         .title("Reglages")
         .icon(CogIcon)
