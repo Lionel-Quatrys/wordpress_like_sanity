@@ -135,6 +135,29 @@ export const siteSettingsType = defineType({
       type: "seo",
       group: "seo",
     }),
+    defineField({
+      name: "googleSiteVerification",
+      title: "Code verification Google Search Console",
+      type: "string",
+      group: "seo",
+      description: "Valeur du meta tag <meta name='google-site-verification' content='...' />",
+    }),
+    defineField({
+      name: "bingSiteVerification",
+      title: "Code verification Bing Webmaster",
+      type: "string",
+      group: "seo",
+      description: "Valeur du meta tag <meta name='msvalidate.01' content='...' />",
+    }),
+    defineField({
+      name: "robotsDisallow",
+      title: "Chemins bloques (robots.txt)",
+      type: "array",
+      group: "seo",
+      description: "Chemins a interdire aux robots d'indexation. Ex : /merci, /confirmation",
+      of: [{ type: "string" }],
+      initialValue: [],
+    }),
 
     // --- IA ---
     defineField({

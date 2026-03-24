@@ -63,7 +63,7 @@ npm run deploy     # déploie le studio sur sanity.io
 |---|---|
 | Réglages | Nom du site, URL, logo, redirections (tableau from → to) |
 | Contact | Email, téléphone, adresse, horaires d'ouverture |
-| SEO | SEO global (titre, meta, OG) |
+| SEO | SEO global, codes de vérification Google Search Console et Bing, chemins bloqués pour robots.txt |
 | IA | Métadonnées IA globales par défaut |
 | Réseaux sociaux | X, LinkedIn, Instagram, Facebook, YouTube |
 | Tracking | Google Tag ID, domaine Plausible Analytics |
@@ -73,7 +73,7 @@ npm run deploy     # déploie le studio sur sanity.io
 
 | Schéma | Description |
 |---|---|
-| `seo` | Titre SEO, meta description, image Open Graph |
+| `seo` | Meta title/description, mot-clé principal, noindex, canonical, OG title/description/image, Twitter card type |
 | `aiMetadata` | Type Schema.org, résumé IA, points clés, intention, audience, JSON-LD, contrôle d'indexation LLM |
 | `imageWithAlt` | Image Sanity + texte alternatif obligatoire |
 | `link` | Lien interne (homepage / page / post) ou externe, avec option nouvel onglet |
@@ -186,4 +186,8 @@ Le front React consomme ce studio via l'API GROQ de Sanity. Points d'attention :
 - Les singletons se requêtent par `_id` fixe : `*[_id == "homepage"][0]`, `*[_id == "siteSettings"][0]`, `*[_id == "footer"][0]`, `*[_id == "notFound"][0]`.
 - `siteSettings.googleTagId` et `siteSettings.plausibleDomain` permettent d'injecter les scripts de tracking sans toucher au code.
 - `siteSettings.redirects` fournit le tableau des redirections 301 à implémenter côté serveur (Next.js `redirects`, Astro middleware, etc.).
+- `siteSettings.robotsDisallow` alimente le fichier `robots.txt` généré côté front. `siteSettings.googleSiteVerification` / `bingSiteVerification` s'injectent en balises `<meta>` dans le `<head>`.
+- `seo.canonicalUrl` permet de surcharger l'URL canonique par défaut page par page.
+- `seo.ogTitle` / `seo.ogDescription` : si vides, le front utilise `metaTitle` / `metaDescription` en fallback.
+- `sitemapPriority` et `sitemapChangefreq` (présents sur `homepage`, `page`, `post`) alimentent le `sitemap.xml` généré côté front.
 - `aiMetadata` peut servir à générer automatiquement le JSON-LD dans le `<head>`.

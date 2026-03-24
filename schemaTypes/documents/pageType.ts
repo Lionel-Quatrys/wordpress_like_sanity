@@ -52,6 +52,43 @@ export const pageType = defineType({
       group: "seo",
     }),
     defineField({
+      name: "sitemapPriority",
+      title: "Priorite dans le sitemap",
+      type: "string",
+      group: "seo",
+      initialValue: "0.5",
+      description: "Importance relative de cette page dans le sitemap (1.0 = max).",
+      options: {
+        list: [
+          { title: "Tres haute (1.0)", value: "1.0" },
+          { title: "Haute (0.8)", value: "0.8" },
+          { title: "Normale (0.5)", value: "0.5" },
+          { title: "Basse (0.3)", value: "0.3" },
+          { title: "Tres basse (0.1)", value: "0.1" },
+        ],
+        layout: "radio",
+      },
+    }),
+    defineField({
+      name: "sitemapChangefreq",
+      title: "Frequence de mise a jour (sitemap)",
+      type: "string",
+      group: "seo",
+      initialValue: "monthly",
+      options: {
+        list: [
+          { title: "Toujours (always)", value: "always" },
+          { title: "Chaque heure (hourly)", value: "hourly" },
+          { title: "Quotidienne (daily)", value: "daily" },
+          { title: "Hebdomadaire (weekly)", value: "weekly" },
+          { title: "Mensuelle (monthly)", value: "monthly" },
+          { title: "Annuelle (yearly)", value: "yearly" },
+          { title: "Jamais (never)", value: "never" },
+        ],
+        layout: "radio",
+      },
+    }),
+    defineField({
       name: "ai",
       title: "IA et donnees structurees",
       type: "aiMetadata",
