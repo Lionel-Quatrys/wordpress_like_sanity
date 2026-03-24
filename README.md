@@ -63,6 +63,7 @@ npm run deploy     # déploie le studio sur sanity.io
 | Groupe | Champs |
 |---|---|
 | Réglages | Nom du site, URL, logo, redirections (tableau from → to) |
+| En-tête par défaut | Image fallback (1920×600px recommandé), couleur de fond hex, hauteur (compact/normal/grand), couleur du texte (clair/sombre) |
 | Contact | Email, téléphone, adresse, horaires d'ouverture |
 | SEO | SEO global, codes de vérification Google Search Console et Bing, chemins bloqués pour robots.txt |
 | IA | Métadonnées IA globales par défaut |

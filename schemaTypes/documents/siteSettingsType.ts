@@ -6,6 +6,7 @@ export const siteSettingsType = defineType({
   type: "document",
   groups: [
     { name: "settings", title: "Reglages", default: true },
+    { name: "defaultHero", title: "En-tete par defaut" },
     { name: "contact", title: "Contact" },
     { name: "seo", title: "SEO" },
     { name: "ai", title: "IA" },
@@ -14,6 +15,61 @@ export const siteSettingsType = defineType({
     { name: "legal", title: "Mentions legales" },
   ],
   fields: [
+    // --- En-tête par défaut (fallback pages sans hero) ---
+    defineField({
+      name: "defaultHeroImage",
+      title: "Image d'en-tete par defaut",
+      type: "imageWithAlt",
+      group: "defaultHero",
+      description:
+        "Utilisee comme banniere sur les pages qui n'ont pas de section Hero. Dimensions recommandees : 1920 x 600 px (ratio 16/3).",
+    }),
+    defineField({
+      name: "defaultHeroColor",
+      title: "Couleur de fond par defaut",
+      type: "string",
+      group: "defaultHero",
+      description:
+        "Couleur utilisee si aucune image n'est definie. Format hexadecimal, ex : #1E3A5F. Laisse vide pour utiliser la couleur principale de la charte.",
+      validation: (Rule) =>
+        Rule.custom((value: string | undefined) => {
+          if (!value) return true;
+          return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value)
+            ? true
+            : "Utilise le format hexadecimal, ex : #1E3A5F";
+        }),
+    }),
+    defineField({
+      name: "defaultHeroHeight",
+      title: "Hauteur de l'en-tete",
+      type: "string",
+      group: "defaultHero",
+      initialValue: "medium",
+      options: {
+        list: [
+          { title: "Compact (300px)", value: "compact" },
+          { title: "Normal (500px)", value: "medium" },
+          { title: "Grand (700px)", value: "large" },
+        ],
+        layout: "radio",
+      },
+    }),
+    defineField({
+      name: "defaultHeroTextColor",
+      title: "Couleur du texte sur l'en-tete",
+      type: "string",
+      group: "defaultHero",
+      initialValue: "light",
+      description: "Assure le contraste entre le texte et le fond ou l'image.",
+      options: {
+        list: [
+          { title: "Clair (blanc)", value: "light" },
+          { title: "Sombre (noir)", value: "dark" },
+        ],
+        layout: "radio",
+      },
+    }),
+
     // --- Réglages généraux ---
     defineField({
       name: "siteName",
