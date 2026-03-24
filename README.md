@@ -42,6 +42,7 @@ npm run deploy     # déploie le studio sur sanity.io
 | `category` | Multiple | Catégories d'articles |
 | `testimonial` | Multiple | Témoignages clients — nom, rôle, photo, citation, note (3-5 étoiles) |
 | `siteSettings` | Singleton | Réglages globaux — voir détail ci-dessous |
+| `header` | Singleton | En-tête — référence navigation, bouton CTA, disposition, sticky, transparent sur hero, masquage au scroll |
 | `footer` | Singleton | Pied de page — colonnes de liens, copyright, affichage des réseaux sociaux |
 | `navigation` | Multiple | Menus de navigation |
 | `notFound` | Singleton | Page 404 — titre, description, lien de retour, SEO |
@@ -106,7 +107,7 @@ Disponibles dans `homepage` et `page` :
 
 ## Singletons
 
-Les singletons (une seule instance possible) sont : `homepage`, `blogPage`, `siteSettings`, `themeSettings`, `footer`, `notFound`.
+Les singletons (une seule instance possible) sont : `homepage`, `blogPage`, `siteSettings`, `themeSettings`, `header`, `footer`, `notFound`.
 
 Déclarés dans [src/singletons.ts](src/singletons.ts), ils apparaissent comme entrées directes dans la sidebar (accès direct au document, sans liste).
 
@@ -126,6 +127,7 @@ schemaTypes/
 │   ├── testimonialType.ts
 │   ├── siteSettingsType.ts
 │   ├── themeSettingsType.ts
+│   ├── headerType.ts
 │   ├── footerType.ts
 │   ├── navigationType.ts
 │   └── notFoundType.ts
@@ -174,7 +176,8 @@ sanity.cli.ts          # Config CLI
 9. Médias
 10. *(séparateur)*
 11. Navigation
-12. Pied de page *(singleton)*
+12. En-tête *(singleton)*
+13. Pied de page *(singleton)*
 13. Page 404 *(singleton)*
 14. Charte graphique *(singleton)*
 15. Réglages *(singleton)*

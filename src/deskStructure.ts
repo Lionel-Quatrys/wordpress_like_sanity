@@ -1,11 +1,12 @@
 import {
   CogIcon,
+  ColorWheelIcon,
+  ComponentIcon,
   DocumentIcon,
   DocumentsIcon,
   ErrorOutlineIcon,
   HomeIcon,
   MenuIcon,
-  ColorWheelIcon,
   StarIcon,
   TagIcon,
   UsersIcon,
@@ -46,6 +47,15 @@ export const deskStructure = (S: StructureBuilder) =>
         .child(S.documentTypeList("sanity.imageAsset").title("Medias")),
       S.divider(),
       S.documentTypeListItem("navigation").title("Navigation").icon(MenuIcon),
+      S.listItem()
+        .title("En-tete")
+        .icon(ComponentIcon)
+        .child(
+          S.document()
+            .schemaType("header")
+            .documentId("header")
+            .title("En-tete"),
+        ),
       S.listItem()
         .title("Pied de page")
         .icon(MenuIcon)

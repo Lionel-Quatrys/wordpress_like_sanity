@@ -2,6 +2,7 @@ import { authorType } from "./documents/authorType";
 import { blogPageType } from "./documents/blogPageType";
 import { categoryType } from "./documents/categoryType";
 import { footerType } from "./documents/footerType";
+import { headerType } from "./documents/headerType";
 import { homepageType } from "./documents/homepageType";
 import { navigationType } from "./documents/navigationType";
 import { notFoundType } from "./documents/notFoundType";
@@ -39,6 +40,7 @@ export const schemaTypes = [
   testimonialType,
   siteSettingsType,
   themeSettingsType,
+  headerType,
   footerType,
   navigationType,
   notFoundType,
