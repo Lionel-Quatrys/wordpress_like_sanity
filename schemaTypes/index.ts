@@ -1,5 +1,6 @@
 import { authorType } from "./documents/authorType";
 import { categoryType } from "./documents/categoryType";
+import { footerType } from "./documents/footerType";
 import { homepageType } from "./documents/homepageType";
 import { navigationType } from "./documents/navigationType";
 import { notFoundType } from "./documents/notFoundType";
@@ -19,10 +20,14 @@ import { faqSectionType } from "./objects/sections/faq";
 import { gallerySectionType } from "./objects/sections/gallery";
 import { heroSectionType } from "./objects/sections/hero";
 import { imageSectionType } from "./objects/sections/imageSection";
+import { pricingSectionType } from "./objects/sections/pricingSection";
+import { teamSectionType } from "./objects/sections/teamSection";
 import { testimonialsSectionType } from "./objects/sections/testimonialsSection";
 import { textSectionType } from "./objects/sections/textSection";
+import { videoSectionType } from "./objects/sections/videoSection";
 
 export const schemaTypes = [
+  // Documents
   homepageType,
   pageType,
   postType,
@@ -30,20 +35,26 @@ export const schemaTypes = [
   authorType,
   testimonialType,
   siteSettingsType,
+  footerType,
   navigationType,
   notFoundType,
+  // Objets
   aiMetadataType,
   seoType,
   slugType,
   imageWithAltType,
   linkType,
   richTextType,
+  // Sections
   heroSectionType,
   textSectionType,
   imageSectionType,
+  videoSectionType,
   gallerySectionType,
   ctaSectionType,
   faqSectionType,
+  pricingSectionType,
+  teamSectionType,
   contactSectionType,
   testimonialsSectionType,
 ];

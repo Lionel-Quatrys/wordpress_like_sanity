@@ -37,12 +37,25 @@ npm run deploy     # déploie le studio sur sanity.io
 | `homepage` | Singleton | Page d'accueil — page builder + articles mis en avant + derniers articles |
 | `page` | Multiple | Pages génériques — page builder complet |
 | `post` | Multiple | Articles de blog — titre, extrait, image, contenu riche, catégorie(s), auteur, date |
-| `author` | Multiple | Auteurs — nom, bio, photo |
+| `author` | Multiple | Auteurs — nom, bio, photo (réutilisés dans la section équipe) |
 | `category` | Multiple | Catégories d'articles |
 | `testimonial` | Multiple | Témoignages clients — nom, rôle, photo, citation, note (3-5 étoiles) |
-| `siteSettings` | Singleton | Réglages globaux — nom du site, URL, logo, SEO global, réseaux sociaux |
+| `siteSettings` | Singleton | Réglages globaux — voir détail ci-dessous |
+| `footer` | Singleton | Pied de page — colonnes de liens, copyright, affichage des réseaux sociaux |
 | `navigation` | Multiple | Menus de navigation |
 | `notFound` | Singleton | Page 404 — titre, description, lien de retour, SEO |
+
+#### Détail de `siteSettings`
+
+| Groupe | Champs |
+|---|---|
+| Réglages | Nom du site, URL, logo, redirections (tableau from → to) |
+| Contact | Email, téléphone, adresse, horaires d'ouverture |
+| SEO | SEO global (titre, meta, OG) |
+| IA | Métadonnées IA globales par défaut |
+| Réseaux sociaux | X, LinkedIn, Instagram, Facebook, YouTube |
+| Tracking | Google Tag ID, domaine Plausible Analytics |
+| Mentions légales | Texte bannière cookies, référence page politique de confidentialité, référence page mentions légales |
 
 ### Objets réutilisables
 
@@ -64,9 +77,12 @@ Disponibles dans `homepage` et `page` :
 | `heroSection` | Sur-titre, titre, sous-titre, image de fond, 2 CTA |
 | `textSection` | Bloc de contenu riche |
 | `imageSection` | Image pleine largeur avec légende optionnelle |
+| `videoSection` | Embed YouTube / Vimeo — titre, description, lecture auto optionnelle |
 | `gallerySection` | Galerie d'images |
 | `ctaSection` | Appel à l'action avec titre, description et lien |
 | `faqSection` | Accordéon de questions/réponses |
+| `pricingSection` | Grilles tarifaires — offres avec prix, période, caractéristiques, CTA, mise en avant |
+| `teamSection` | Références vers des `author` — titre, sous-titre |
 | `testimonialsSection` | Sélection de témoignages (références vers `testimonial`) |
 | `contactSection` | Config du formulaire de contact : champs personnalisables, email destinataire, message de confirmation |
 
@@ -76,9 +92,9 @@ Disponibles dans `homepage` et `page` :
 
 ## Singletons
 
-Les singletons (une seule instance possible) sont : `homepage`, `siteSettings`, `notFound`.
+Les singletons (une seule instance possible) sont : `homepage`, `siteSettings`, `footer`, `notFound`.
 
-Ils sont déclarés dans `src/singletons.ts` et apparaissent comme entrées directes dans la sidebar du studio (pas de liste, accès direct au document).
+Déclarés dans [src/singletons.ts](src/singletons.ts), ils apparaissent comme entrées directes dans la sidebar (accès direct au document, sans liste).
 
 ---
 
@@ -94,6 +110,7 @@ schemaTypes/
 │   ├── categoryType.ts
 │   ├── testimonialType.ts
 │   ├── siteSettingsType.ts
+│   ├── footerType.ts
 │   ├── navigationType.ts
 │   └── notFoundType.ts
 ├── objects/
@@ -107,9 +124,12 @@ schemaTypes/
 │       ├── hero.ts
 │       ├── textSection.ts
 │       ├── imageSection.ts
+│       ├── videoSection.ts
 │       ├── gallery.ts
 │       ├── cta.ts
 │       ├── faq.ts
+│       ├── pricingSection.ts
+│       ├── teamSection.ts
 │       ├── testimonialsSection.ts
 │       └── contactSection.ts
 └── index.ts
@@ -137,8 +157,9 @@ sanity.cli.ts          # Config CLI
 9. Médias
 10. *(séparateur)*
 11. Navigation
-12. Page 404 *(singleton)*
-13. Réglages *(singleton)*
+12. Pied de page *(singleton)*
+13. Page 404 *(singleton)*
+14. Réglages *(singleton)*
 
 ---
 
@@ -148,5 +169,7 @@ Le front React consomme ce studio via l'API GROQ de Sanity. Points d'attention :
 
 - Utiliser `_type` pour router chaque section du page builder vers son composant React.
 - La `contactSection` fournit `recipientEmail`, `fields`, `submitLabel` et `successMessage` — l'envoi effectif est délégué à un service tiers.
-- Les singletons (`homepage`, `siteSettings`, `notFound`) se requêtent par `_id` fixe (ex. `*[_id == "homepage"][0]`).
+- Les singletons se requêtent par `_id` fixe : `*[_id == "homepage"][0]`, `*[_id == "siteSettings"][0]`, `*[_id == "footer"][0]`, `*[_id == "notFound"][0]`.
+- `siteSettings.googleTagId` et `siteSettings.plausibleDomain` permettent d'injecter les scripts de tracking sans toucher au code.
+- `siteSettings.redirects` fournit le tableau des redirections 301 à implémenter côté serveur (Next.js `redirects`, Astro middleware, etc.).
 - `aiMetadata` peut servir à générer automatiquement le JSON-LD dans le `<head>`.

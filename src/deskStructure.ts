@@ -4,6 +4,7 @@ import {
   DocumentsIcon,
   ErrorOutlineIcon,
   HomeIcon,
+  MenuIcon,
   StarIcon,
   TagIcon,
   UsersIcon,
@@ -34,7 +35,16 @@ export const deskStructure = (S: StructureBuilder) =>
         .title("Medias")
         .child(S.documentTypeList("sanity.imageAsset").title("Medias")),
       S.divider(),
-      S.documentTypeListItem("navigation").title("Navigation"),
+      S.documentTypeListItem("navigation").title("Navigation").icon(MenuIcon),
+      S.listItem()
+        .title("Pied de page")
+        .icon(MenuIcon)
+        .child(
+          S.document()
+            .schemaType("footer")
+            .documentId("footer")
+            .title("Pied de page"),
+        ),
       S.listItem()
         .title("Page 404")
         .icon(ErrorOutlineIcon)
