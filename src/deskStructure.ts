@@ -5,6 +5,7 @@ import {
   ErrorOutlineIcon,
   HomeIcon,
   MenuIcon,
+  ColorWheelIcon,
   StarIcon,
   TagIcon,
   UsersIcon,
@@ -53,6 +54,15 @@ export const deskStructure = (S: StructureBuilder) =>
             .schemaType("notFound")
             .documentId("notFound")
             .title("Page 404"),
+        ),
+      S.listItem()
+        .title("Charte graphique")
+        .icon(ColorWheelIcon)
+        .child(
+          S.document()
+            .schemaType("themeSettings")
+            .documentId("themeSettings")
+            .title("Charte graphique"),
         ),
       S.listItem()
         .title("Reglages")

@@ -1,0 +1,337 @@
+import { ColorWheelIcon } from "@sanity/icons";
+import { defineField, defineType } from "sanity";
+
+const hexColorValidation = (Rule: any) =>
+  Rule.custom((value: string) => {
+    if (!value) return true;
+    return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value)
+      ? true
+      : "Utilise le format hexadecimal, ex : #3B82F6";
+  });
+
+const radiusOptions = [
+  { title: "Aucun (0px)", value: "0px" },
+  { title: "Leger (4px)", value: "4px" },
+  { title: "Moyen (8px)", value: "8px" },
+  { title: "Arrondi (16px)", value: "16px" },
+  { title: "Tres arrondi (24px)", value: "24px" },
+  { title: "Pilule (9999px)", value: "9999px" },
+];
+
+export const themeSettingsType = defineType({
+  name: "themeSettings",
+  title: "Charte graphique",
+  type: "document",
+  icon: ColorWheelIcon,
+  groups: [
+    { name: "colors", title: "Couleurs", default: true },
+    { name: "typography", title: "Typographie" },
+    { name: "shapes", title: "Formes et rayons" },
+    { name: "spacing", title: "Espacements" },
+  ],
+  fields: [
+    // ---- Couleurs ----
+    defineField({
+      name: "primaryColor",
+      title: "Couleur principale",
+      type: "string",
+      group: "colors",
+      description: "CTA, liens, elements mis en valeur. Ex : #3B82F6",
+      initialValue: "#3B82F6",
+      validation: hexColorValidation,
+    }),
+    defineField({
+      name: "secondaryColor",
+      title: "Couleur secondaire",
+      type: "string",
+      group: "colors",
+      description: "Complement de la couleur principale. Ex : #10B981",
+      initialValue: "#10B981",
+      validation: hexColorValidation,
+    }),
+    defineField({
+      name: "accentColor",
+      title: "Couleur d'accentuation",
+      type: "string",
+      group: "colors",
+      description: "Badges, highlights, elements decoratifs. Ex : #F59E0B",
+      initialValue: "#F59E0B",
+      validation: hexColorValidation,
+    }),
+    defineField({
+      name: "backgroundColor",
+      title: "Fond principal",
+      type: "string",
+      group: "colors",
+      description: "Fond de page. Ex : #FFFFFF",
+      initialValue: "#FFFFFF",
+      validation: hexColorValidation,
+    }),
+    defineField({
+      name: "surfaceColor",
+      title: "Fond des surfaces",
+      type: "string",
+      group: "colors",
+      description: "Cartes, sections alternees, inputs. Ex : #F9FAFB",
+      initialValue: "#F9FAFB",
+      validation: hexColorValidation,
+    }),
+    defineField({
+      name: "textColor",
+      title: "Couleur du texte principal",
+      type: "string",
+      group: "colors",
+      description: "Corps de texte et titres. Ex : #111827",
+      initialValue: "#111827",
+      validation: hexColorValidation,
+    }),
+    defineField({
+      name: "mutedTextColor",
+      title: "Couleur du texte discret",
+      type: "string",
+      group: "colors",
+      description: "Sous-titres, meta, labels secondaires. Ex : #6B7280",
+      initialValue: "#6B7280",
+      validation: hexColorValidation,
+    }),
+    defineField({
+      name: "borderColor",
+      title: "Couleur des bordures",
+      type: "string",
+      group: "colors",
+      description: "Separateurs, contours de cartes. Ex : #E5E7EB",
+      initialValue: "#E5E7EB",
+      validation: hexColorValidation,
+    }),
+
+    // ---- Typographie ----
+    defineField({
+      name: "headingFont",
+      title: "Police des titres",
+      type: "string",
+      group: "typography",
+      description: "Nom exact de la Google Font. Ex : Inter, Playfair Display, Poppins",
+      initialValue: "Inter",
+      options: {
+        list: [
+          { title: "Inter", value: "Inter" },
+          { title: "Poppins", value: "Poppins" },
+          { title: "Montserrat", value: "Montserrat" },
+          { title: "Playfair Display", value: "Playfair Display" },
+          { title: "Merriweather", value: "Merriweather" },
+          { title: "Raleway", value: "Raleway" },
+          { title: "Lato", value: "Lato" },
+          { title: "Roboto", value: "Roboto" },
+          { title: "Nunito", value: "Nunito" },
+          { title: "DM Sans", value: "DM Sans" },
+        ],
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "bodyFont",
+      title: "Police du corps de texte",
+      type: "string",
+      group: "typography",
+      description: "Nom exact de la Google Font. Ex : Inter, Open Sans",
+      initialValue: "Inter",
+      options: {
+        list: [
+          { title: "Inter", value: "Inter" },
+          { title: "Open Sans", value: "Open Sans" },
+          { title: "Lato", value: "Lato" },
+          { title: "Roboto", value: "Roboto" },
+          { title: "Nunito", value: "Nunito" },
+          { title: "Source Sans 3", value: "Source Sans 3" },
+          { title: "DM Sans", value: "DM Sans" },
+          { title: "Poppins", value: "Poppins" },
+        ],
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "h1Size",
+      title: "Taille H1",
+      type: "string",
+      group: "typography",
+      initialValue: "3rem",
+      options: {
+        list: [
+          { title: "Petit (2rem / ~32px)", value: "2rem" },
+          { title: "Moyen (2.5rem / ~40px)", value: "2.5rem" },
+          { title: "Grand (3rem / ~48px)", value: "3rem" },
+          { title: "Tres grand (3.5rem / ~56px)", value: "3.5rem" },
+          { title: "Enorme (4rem / ~64px)", value: "4rem" },
+        ],
+        layout: "radio",
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "h2Size",
+      title: "Taille H2",
+      type: "string",
+      group: "typography",
+      initialValue: "2rem",
+      options: {
+        list: [
+          { title: "Petit (1.5rem / ~24px)", value: "1.5rem" },
+          { title: "Moyen (1.75rem / ~28px)", value: "1.75rem" },
+          { title: "Grand (2rem / ~32px)", value: "2rem" },
+          { title: "Tres grand (2.5rem / ~40px)", value: "2.5rem" },
+        ],
+        layout: "radio",
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "h3Size",
+      title: "Taille H3",
+      type: "string",
+      group: "typography",
+      initialValue: "1.5rem",
+      options: {
+        list: [
+          { title: "Petit (1.125rem / ~18px)", value: "1.125rem" },
+          { title: "Moyen (1.25rem / ~20px)", value: "1.25rem" },
+          { title: "Grand (1.5rem / ~24px)", value: "1.5rem" },
+          { title: "Tres grand (1.75rem / ~28px)", value: "1.75rem" },
+        ],
+        layout: "radio",
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "bodySize",
+      title: "Taille du texte courant",
+      type: "string",
+      group: "typography",
+      initialValue: "1rem",
+      options: {
+        list: [
+          { title: "Petit (0.875rem / 14px)", value: "0.875rem" },
+          { title: "Normal (1rem / 16px)", value: "1rem" },
+          { title: "Grand (1.125rem / 18px)", value: "1.125rem" },
+        ],
+        layout: "radio",
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "headingWeight",
+      title: "Graisse des titres",
+      type: "number",
+      group: "typography",
+      initialValue: 700,
+      options: {
+        list: [
+          { title: "Normal (400)", value: 400 },
+          { title: "Medium (500)", value: 500 },
+          { title: "Semi-gras (600)", value: 600 },
+          { title: "Gras (700)", value: 700 },
+          { title: "Extra-gras (800)", value: 800 },
+        ],
+        layout: "radio",
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "lineHeight",
+      title: "Interligne du texte courant",
+      type: "string",
+      group: "typography",
+      initialValue: "1.6",
+      options: {
+        list: [
+          { title: "Serre (1.4)", value: "1.4" },
+          { title: "Normal (1.6)", value: "1.6" },
+          { title: "Aere (1.8)", value: "1.8" },
+        ],
+        layout: "radio",
+      },
+    }),
+
+    // ---- Formes et rayons ----
+    defineField({
+      name: "buttonRadius",
+      title: "Rayon des boutons",
+      type: "string",
+      group: "shapes",
+      initialValue: "8px",
+      options: { list: radiusOptions, layout: "radio" },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "cardRadius",
+      title: "Rayon des cartes / blocs",
+      type: "string",
+      group: "shapes",
+      initialValue: "8px",
+      options: { list: radiusOptions, layout: "radio" },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "inputRadius",
+      title: "Rayon des champs de formulaire",
+      type: "string",
+      group: "shapes",
+      initialValue: "4px",
+      options: { list: radiusOptions, layout: "radio" },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "imageRadius",
+      title: "Rayon des images",
+      type: "string",
+      group: "shapes",
+      initialValue: "0px",
+      options: { list: radiusOptions, layout: "radio" },
+      validation: (Rule) => Rule.required(),
+    }),
+
+    // ---- Espacements ----
+    defineField({
+      name: "sectionPadding",
+      title: "Espacement vertical des sections",
+      type: "string",
+      group: "spacing",
+      description: "Padding haut/bas applique a chaque section de page.",
+      initialValue: "80px",
+      options: {
+        list: [
+          { title: "Compact (40px)", value: "40px" },
+          { title: "Normal (80px)", value: "80px" },
+          { title: "Large (120px)", value: "120px" },
+        ],
+        layout: "radio",
+      },
+    }),
+    defineField({
+      name: "containerMaxWidth",
+      title: "Largeur max du contenu",
+      type: "string",
+      group: "spacing",
+      description: "Largeur maximale du conteneur principal.",
+      initialValue: "1200px",
+      options: {
+        list: [
+          { title: "Etroit (960px)", value: "960px" },
+          { title: "Normal (1200px)", value: "1200px" },
+          { title: "Large (1440px)", value: "1440px" },
+        ],
+        layout: "radio",
+      },
+    }),
+  ],
+  preview: {
+    select: {
+      primary: "primaryColor",
+      heading: "headingFont",
+    },
+    prepare: ({ primary, heading }) => ({
+      title: "Charte graphique",
+      subtitle: `${heading || "Police non definie"} — ${primary || "Couleur non definie"}`,
+      media: ColorWheelIcon,
+    }),
+  },
+});

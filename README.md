@@ -44,6 +44,18 @@ npm run deploy     # déploie le studio sur sanity.io
 | `footer` | Singleton | Pied de page — colonnes de liens, copyright, affichage des réseaux sociaux |
 | `navigation` | Multiple | Menus de navigation |
 | `notFound` | Singleton | Page 404 — titre, description, lien de retour, SEO |
+| `themeSettings` | Singleton | Charte graphique — couleurs, typographie, rayons, espacements |
+
+#### Détail de `themeSettings`
+
+| Groupe | Champs |
+|---|---|
+| Couleurs | Principale, secondaire, accentuation, fond, surfaces, texte, texte discret, bordures (format hex `#RRGGBB`) |
+| Typographie | Police titres, police corps, tailles H1/H2/H3/body (en rem), graisse des titres, interligne |
+| Formes et rayons | Rayon boutons, cartes/blocs, champs, images (de 0px à 9999px) |
+| Espacements | Padding vertical des sections, largeur max du conteneur |
+
+> Les valeurs de `themeSettings` sont destinées à être transformées en CSS custom properties (`--color-primary`, `--font-heading`, etc.) côté front.
 
 #### Détail de `siteSettings`
 
@@ -92,7 +104,7 @@ Disponibles dans `homepage` et `page` :
 
 ## Singletons
 
-Les singletons (une seule instance possible) sont : `homepage`, `siteSettings`, `footer`, `notFound`.
+Les singletons (une seule instance possible) sont : `homepage`, `siteSettings`, `themeSettings`, `footer`, `notFound`.
 
 Déclarés dans [src/singletons.ts](src/singletons.ts), ils apparaissent comme entrées directes dans la sidebar (accès direct au document, sans liste).
 
@@ -110,6 +122,7 @@ schemaTypes/
 │   ├── categoryType.ts
 │   ├── testimonialType.ts
 │   ├── siteSettingsType.ts
+│   ├── themeSettingsType.ts
 │   ├── footerType.ts
 │   ├── navigationType.ts
 │   └── notFoundType.ts
@@ -159,7 +172,8 @@ sanity.cli.ts          # Config CLI
 11. Navigation
 12. Pied de page *(singleton)*
 13. Page 404 *(singleton)*
-14. Réglages *(singleton)*
+14. Charte graphique *(singleton)*
+15. Réglages *(singleton)*
 
 ---
 

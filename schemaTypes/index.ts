@@ -8,6 +8,7 @@ import { pageType } from "./documents/pageType";
 import { postType } from "./documents/postType";
 import { siteSettingsType } from "./documents/siteSettingsType";
 import { testimonialType } from "./documents/testimonialType";
+import { themeSettingsType } from "./documents/themeSettingsType";
 import { aiMetadataType } from "./objects/aiMetadata";
 import { imageWithAltType } from "./objects/imageWithAlt";
 import { linkType } from "./objects/link";
@@ -35,6 +36,7 @@ export const schemaTypes = [
   authorType,
   testimonialType,
   siteSettingsType,
+  themeSettingsType,
   footerType,
   navigationType,
   notFoundType,
