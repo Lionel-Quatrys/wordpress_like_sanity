@@ -1,4 +1,5 @@
 import { authorType } from "./documents/authorType";
+import { blogPageType } from "./documents/blogPageType";
 import { categoryType } from "./documents/categoryType";
 import { footerType } from "./documents/footerType";
 import { homepageType } from "./documents/homepageType";
@@ -30,6 +31,7 @@ import { videoSectionType } from "./objects/sections/videoSection";
 export const schemaTypes = [
   // Documents
   homepageType,
+  blogPageType,
   pageType,
   postType,
   categoryType,

@@ -35,6 +35,7 @@ npm run deploy     # déploie le studio sur sanity.io
 | Schéma | Type | Description |
 |---|---|---|
 | `homepage` | Singleton | Page d'accueil — page builder + articles mis en avant + derniers articles |
+| `blogPage` | Singleton | Page liste des articles — config affichage, pagination, filtres, article épinglé, SEO |
 | `page` | Multiple | Pages génériques — page builder complet |
 | `post` | Multiple | Articles de blog — titre, extrait, image, contenu riche, catégorie(s), auteur, date |
 | `author` | Multiple | Auteurs — nom, bio, photo (réutilisés dans la section équipe) |
@@ -104,7 +105,7 @@ Disponibles dans `homepage` et `page` :
 
 ## Singletons
 
-Les singletons (une seule instance possible) sont : `homepage`, `siteSettings`, `themeSettings`, `footer`, `notFound`.
+Les singletons (une seule instance possible) sont : `homepage`, `blogPage`, `siteSettings`, `themeSettings`, `footer`, `notFound`.
 
 Déclarés dans [src/singletons.ts](src/singletons.ts), ils apparaissent comme entrées directes dans la sidebar (accès direct au document, sans liste).
 
@@ -116,6 +117,7 @@ Déclarés dans [src/singletons.ts](src/singletons.ts), ils apparaissent comme e
 schemaTypes/
 ├── documents/
 │   ├── homepageType.ts
+│   ├── blogPageType.ts
 │   ├── pageType.ts
 │   ├── postType.ts
 │   ├── authorType.ts
@@ -160,8 +162,9 @@ sanity.cli.ts          # Config CLI
 ## Sidebar du studio (ordre)
 
 1. Page d'accueil *(singleton)*
-2. *(séparateur)*
-3. Pages
+2. Page Blog *(singleton)*
+3. *(séparateur)*
+4. Pages
 4. Articles
 5. Catégories
 6. Auteurs

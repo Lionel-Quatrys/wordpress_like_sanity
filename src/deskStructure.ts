@@ -25,6 +25,15 @@ export const deskStructure = (S: StructureBuilder) =>
             .documentId("homepage")
             .title("Page d'accueil"),
         ),
+      S.listItem()
+        .title("Page Blog")
+        .icon(DocumentsIcon)
+        .child(
+          S.document()
+            .schemaType("blogPage")
+            .documentId("blogPage")
+            .title("Page Blog"),
+        ),
       S.divider(),
       S.documentTypeListItem("page").title("Pages").icon(DocumentIcon),
       S.documentTypeListItem("post").title("Articles").icon(DocumentsIcon),

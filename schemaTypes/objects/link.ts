@@ -29,7 +29,7 @@ export const linkType = defineType({
       name: "internalReference",
       title: "Reference interne",
       type: "reference",
-      to: [{ type: "homepage" }, { type: "page" }, { type: "post" }],
+      to: [{ type: "homepage" }, { type: "blogPage" }, { type: "page" }, { type: "post" }],
       hidden: ({ parent }) => parent?.linkType !== "internal",
     }),
     defineField({
