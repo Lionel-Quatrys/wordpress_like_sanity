@@ -57,9 +57,7 @@ export const deskStructure = (S: StructureBuilder, context: any) => {
       S.documentTypeListItem("author").title("Auteurs").icon(UsersIcon),
 
     can("testimonials") &&
-      S.documentTypeListItem("testimonial")
-        .title("Temoignages")
-        .icon(StarIcon),
+      S.documentTypeListItem("testimonial").title("Temoignages").icon(StarIcon),
 
     S.divider(),
 
@@ -107,13 +105,13 @@ export const deskStructure = (S: StructureBuilder, context: any) => {
 
     can("siteSettings") &&
       S.listItem()
-        .title("Reglages generaux")
+        .title("Reglages globaux")
         .icon(CogIcon)
         .child(
           S.document()
             .schemaType("siteSettings")
             .documentId("siteSettings")
-            .title("Reglages generaux"),
+            .title("Reglages globaux"),
         ),
 
     can("theme") &&

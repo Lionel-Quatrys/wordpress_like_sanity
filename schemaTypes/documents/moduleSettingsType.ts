@@ -7,7 +7,7 @@ const moduleField = (name: string, title: string, description: string) =>
     title,
     description,
     type: "boolean",
-    initialValue: false,
+    initialValue: true,
   });
 
 export const moduleSettingsType = defineType({
@@ -16,31 +16,36 @@ export const moduleSettingsType = defineType({
   type: "document",
   icon: ControlsIcon,
   fields: [
-    // -- Page builder
+    // -- Menu : Contenu
+    moduleField(
+      "blog",
+      "Blog",
+      "Acces a la page blog, aux articles, categories et auteurs",
+    ),
     moduleField(
       "testimonials",
       "Temoignages",
-      "Section temoignages dans le page builder + acces a la liste des temoignages",
+      "Acces a la liste des temoignages + section page builder",
     ),
+    // -- Menu : Structure
+    moduleField("header", "En-tete", "Acces a la configuration de l'en-tete"),
     moduleField(
-      "team",
-      "Section Equipe",
-      "Section equipe dans le page builder",
+      "footer",
+      "Pied de page",
+      "Acces a la configuration du pied de page",
     ),
+    // -- Menu : Reglages
     moduleField(
-      "pricing",
-      "Section Tarifs",
-      "Section grille tarifaire dans le page builder",
+      "siteSettings",
+      "Reglages globaux",
+      "Acces aux reglages globaux du site",
     ),
+    moduleField("theme", "Charte graphique", "Acces a la charte graphique"),
+    // -- Page builder : sections
     moduleField(
       "gallery",
       "Section Galerie",
       "Section galerie d'images dans le page builder",
-    ),
-    moduleField(
-      "video",
-      "Section Video",
-      "Section video dans le page builder",
     ),
     moduleField(
       "faq",
@@ -48,28 +53,24 @@ export const moduleSettingsType = defineType({
       "Section questions / reponses dans le page builder",
     ),
     moduleField(
+      "video",
+      "Section Video",
+      "Section video dans le page builder",
+    ),
+    moduleField(
+      "pricing",
+      "Section Tarifs",
+      "Section grille tarifaire dans le page builder",
+    ),
+    moduleField(
+      "team",
+      "Section Equipe",
+      "Section equipe dans le page builder",
+    ),
+    moduleField(
       "contact",
       "Formulaire de contact",
       "Section formulaire de contact dans le page builder",
-    ),
-    // -- Contenu
-    moduleField(
-      "blog",
-      "Blog",
-      "Acces a la page blog, aux articles, categories et auteurs",
-    ),
-    // -- Reglages
-    moduleField("header", "En-tete", "Acces a la configuration de l'en-tete"),
-    moduleField(
-      "footer",
-      "Pied de page",
-      "Acces a la configuration du pied de page",
-    ),
-    moduleField("theme", "Charte graphique", "Acces a la charte graphique"),
-    moduleField(
-      "siteSettings",
-      "Reglages globaux",
-      "Acces aux reglages globaux du site",
     ),
   ],
   preview: {
