@@ -34,8 +34,8 @@ export const pageType = defineType({
         defineArrayMember({ type: "heroSection" }),
         defineArrayMember({ type: "textSection" }),
         defineArrayMember({ type: "imageSection" }),
-        defineArrayMember({ type: "gallerySection" }),
         defineArrayMember({ type: "ctaSection" }),
+        defineArrayMember({ type: "gallerySection" }),
         defineArrayMember({ type: "faqSection" }),
         defineArrayMember({ type: "videoSection" }),
         defineArrayMember({ type: "pricingSection" }),
@@ -97,13 +97,6 @@ export const pageType = defineType({
         structuredDataType: "WebPage",
         allowLlmIndexing: true,
       },
-    }),
-    defineField({
-      name: "isPublished",
-      title: "Visible sur le site",
-      type: "boolean",
-      initialValue: true,
-      group: "settings",
     }),
   ],
   preview: {

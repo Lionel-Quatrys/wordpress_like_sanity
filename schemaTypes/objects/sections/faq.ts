@@ -1,9 +1,13 @@
 import { defineField, defineType } from "sanity";
+import { isModuleEnabled } from "../../../src/moduleCache";
 
 export const faqSectionType = defineType({
   name: "faqSection",
   title: "FAQ",
   type: "object",
+  hidden: ({ currentUser }) =>
+    !currentUser?.roles?.some((r: any) => r.name === "administrator") &&
+    !isModuleEnabled("faq"),
   fields: [
     defineField({
       name: "title",

@@ -2,6 +2,7 @@ import {
   CogIcon,
   ColorWheelIcon,
   ComponentIcon,
+  ControlsIcon,
   DocumentIcon,
   DocumentsIcon,
   ErrorOutlineIcon,
@@ -12,20 +13,34 @@ import {
   UsersIcon,
 } from "@sanity/icons";
 import type { StructureBuilder } from "sanity/desk";
+import { isModuleEnabled } from "./moduleCache";
 
-export const deskStructure = (S: StructureBuilder) =>
-  S.list()
-    .title("Contenu")
-    .items([
-      S.listItem()
-        .title("Page d'accueil")
-        .icon(HomeIcon)
-        .child(
-          S.document()
-            .schemaType("homepage")
-            .documentId("homepage")
-            .title("Page d'accueil"),
-        ),
+export const deskStructure = (S: StructureBuilder, context: any) => {
+  const isAdmin = context.currentUser?.roles?.some(
+    (r: any) => r.name === "administrator",
+  );
+
+  const can = (module: Parameters<typeof isModuleEnabled>[0]) =>
+    isAdmin || isModuleEnabled(module);
+
+  const items = [
+    S.listItem()
+      .title("Page d'accueil")
+      .icon(HomeIcon)
+      .child(
+        S.document()
+          .schemaType("homepage")
+          .documentId("homepage")
+          .title("Page d'accueil"),
+      ),
+
+    can("blog") &&
+      S.documentTypeListItem("post").title("Articles").icon(DocumentsIcon),
+
+    can("blog") &&
+      S.documentTypeListItem("category").title("Categories").icon(TagIcon),
+
+    can("blog") &&
       S.listItem()
         .title("Page Blog")
         .icon(DocumentsIcon)
@@ -35,18 +50,26 @@ export const deskStructure = (S: StructureBuilder) =>
             .documentId("blogPage")
             .title("Page Blog"),
         ),
-      S.divider(),
-      S.documentTypeListItem("page").title("Pages").icon(DocumentIcon),
-      S.documentTypeListItem("post").title("Articles").icon(DocumentsIcon),
-      S.documentTypeListItem("category").title("Categories").icon(TagIcon),
+
+    S.documentTypeListItem("page").title("Pages").icon(DocumentIcon),
+
+    can("blog") &&
       S.documentTypeListItem("author").title("Auteurs").icon(UsersIcon),
-      S.documentTypeListItem("testimonial").title("Temoignages").icon(StarIcon),
-      S.divider(),
-      S.listItem()
-        .title("Medias")
-        .child(S.documentTypeList("sanity.imageAsset").title("Medias")),
-      S.divider(),
-      S.documentTypeListItem("navigation").title("Navigation").icon(MenuIcon),
+
+    can("testimonials") &&
+      S.documentTypeListItem("testimonial")
+        .title("Temoignages")
+        .icon(StarIcon),
+
+    S.divider(),
+
+    S.listItem()
+      .title("Medias")
+      .child(S.documentTypeList("sanity.imageAsset").title("Medias")),
+
+    S.divider(),
+
+    can("header") &&
       S.listItem()
         .title("En-tete")
         .icon(ComponentIcon)
@@ -56,6 +79,10 @@ export const deskStructure = (S: StructureBuilder) =>
             .documentId("header")
             .title("En-tete"),
         ),
+
+    S.documentTypeListItem("navigation").title("Navigation").icon(MenuIcon),
+
+    can("footer") &&
       S.listItem()
         .title("Pied de page")
         .icon(MenuIcon)
@@ -65,15 +92,31 @@ export const deskStructure = (S: StructureBuilder) =>
             .documentId("footer")
             .title("Pied de page"),
         ),
+
+    S.listItem()
+      .title("Page 404")
+      .icon(ErrorOutlineIcon)
+      .child(
+        S.document()
+          .schemaType("notFound")
+          .documentId("notFound")
+          .title("Page 404"),
+      ),
+
+    S.divider(),
+
+    can("siteSettings") &&
       S.listItem()
-        .title("Page 404")
-        .icon(ErrorOutlineIcon)
+        .title("Reglages generaux")
+        .icon(CogIcon)
         .child(
           S.document()
-            .schemaType("notFound")
-            .documentId("notFound")
-            .title("Page 404"),
+            .schemaType("siteSettings")
+            .documentId("siteSettings")
+            .title("Reglages generaux"),
         ),
+
+    can("theme") &&
       S.listItem()
         .title("Charte graphique")
         .icon(ColorWheelIcon)
@@ -83,13 +126,18 @@ export const deskStructure = (S: StructureBuilder) =>
             .documentId("themeSettings")
             .title("Charte graphique"),
         ),
+
+    isAdmin &&
       S.listItem()
-        .title("Reglages")
-        .icon(CogIcon)
+        .title("Modules editeurs")
+        .icon(ControlsIcon)
         .child(
           S.document()
-            .schemaType("siteSettings")
-            .documentId("siteSettings")
-            .title("Reglages globaux"),
+            .schemaType("moduleSettings")
+            .documentId("moduleSettings")
+            .title("Modules editeurs"),
         ),
-    ]);
+  ].filter(Boolean) as any[];
+
+  return S.list().title("Contenu").items(items);
+};

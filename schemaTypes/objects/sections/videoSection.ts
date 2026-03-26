@@ -1,11 +1,15 @@
 import { PlayIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { isModuleEnabled } from "../../../src/moduleCache";
 
 export const videoSectionType = defineType({
   name: "videoSection",
   title: "Section video",
   type: "object",
   icon: PlayIcon,
+  hidden: ({ currentUser }) =>
+    !currentUser?.roles?.some((r: any) => r.name === "administrator") &&
+    !isModuleEnabled("video"),
   fields: [
     defineField({
       name: "title",

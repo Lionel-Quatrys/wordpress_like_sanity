@@ -1,6 +1,8 @@
 import { visionTool } from "@sanity/vision";
 import { defineConfig } from "sanity";
 import { deskTool } from "sanity/desk";
+import { colorInput } from "@sanity/color-input";
+import { moduleVisibilityPlugin } from "./src/plugins/moduleVisibility";
 import { schemaTypes } from "./schemaTypes";
 import { deskStructure } from "./src/deskStructure";
 import { singletonActions, singletonTypes } from "./src/singletons";
@@ -15,6 +17,8 @@ export default defineConfig({
       structure: deskStructure,
     }),
     visionTool(),
+    colorInput(),
+    moduleVisibilityPlugin(),
   ],
   schema: {
     types: schemaTypes,

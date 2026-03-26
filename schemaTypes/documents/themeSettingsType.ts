@@ -1,14 +1,6 @@
 import { ColorWheelIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
-const hexColorValidation = (Rule: any) =>
-  Rule.custom((value: string) => {
-    if (!value) return true;
-    return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value)
-      ? true
-      : "Utilise le format hexadecimal, ex : #3B82F6";
-  });
-
 const radiusOptions = [
   { title: "Aucun (0px)", value: "0px" },
   { title: "Leger (4px)", value: "4px" },
@@ -34,74 +26,66 @@ export const themeSettingsType = defineType({
     defineField({
       name: "primaryColor",
       title: "Couleur principale",
-      type: "string",
+      type: "color",
       group: "colors",
-      description: "CTA, liens, elements mis en valeur. Ex : #3B82F6",
-      initialValue: "#3B82F6",
-      validation: hexColorValidation,
+      description: "CTA, liens, elements mis en valeur.",
+      options: { disableAlpha: true },
     }),
     defineField({
       name: "secondaryColor",
       title: "Couleur secondaire",
-      type: "string",
+      type: "color",
       group: "colors",
-      description: "Complement de la couleur principale. Ex : #10B981",
-      initialValue: "#10B981",
-      validation: hexColorValidation,
+      description: "Complement de la couleur principale.",
+      options: { disableAlpha: true },
     }),
     defineField({
       name: "accentColor",
       title: "Couleur d'accentuation",
-      type: "string",
+      type: "color",
       group: "colors",
-      description: "Badges, highlights, elements decoratifs. Ex : #F59E0B",
-      initialValue: "#F59E0B",
-      validation: hexColorValidation,
+      description: "Badges, highlights, elements decoratifs.",
+      options: { disableAlpha: true },
     }),
     defineField({
       name: "backgroundColor",
       title: "Fond principal",
-      type: "string",
+      type: "color",
       group: "colors",
-      description: "Fond de page. Ex : #FFFFFF",
-      initialValue: "#FFFFFF",
-      validation: hexColorValidation,
+      description: "Fond de page.",
+      options: { disableAlpha: true },
     }),
     defineField({
       name: "surfaceColor",
       title: "Fond des surfaces",
-      type: "string",
+      type: "color",
       group: "colors",
-      description: "Cartes, sections alternees, inputs. Ex : #F9FAFB",
-      initialValue: "#F9FAFB",
-      validation: hexColorValidation,
+      description: "Cartes, sections alternees, inputs.",
+      options: { disableAlpha: true },
     }),
     defineField({
       name: "textColor",
       title: "Couleur du texte principal",
-      type: "string",
+      type: "color",
       group: "colors",
-      description: "Corps de texte et titres. Ex : #111827",
-      initialValue: "#111827",
-      validation: hexColorValidation,
+      description: "Corps de texte et titres.",
+      options: { disableAlpha: true },
     }),
     defineField({
       name: "mutedTextColor",
       title: "Couleur du texte discret",
-      type: "string",
+      type: "color",
       group: "colors",
-      description: "Sous-titres, meta, labels secondaires. Ex : #6B7280",
-      initialValue: "#6B7280",
-      validation: hexColorValidation,
+      description: "Sous-titres, meta, labels secondaires.",
+      options: { disableAlpha: true },
     }),
     defineField({
       name: "borderColor",
       title: "Couleur des bordures",
-      type: "string",
+      type: "color",
       group: "colors",
-      description: "Separateurs, contours de cartes. Ex : #E5E7EB",
-      initialValue: "#E5E7EB",
-      validation: hexColorValidation,
+      description: "Separateurs, contours de cartes.",
+      options: { disableAlpha: true },
     }),
 
     // ---- Typographie ----

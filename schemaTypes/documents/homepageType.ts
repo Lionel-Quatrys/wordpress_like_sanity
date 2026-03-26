@@ -126,13 +126,6 @@ export const homepageType = defineType({
         allowLlmIndexing: true,
       },
     }),
-    defineField({
-      name: "isPublished",
-      title: "Visible sur le site",
-      type: "boolean",
-      initialValue: true,
-      group: "settings",
-    }),
   ],
   preview: {
     select: {

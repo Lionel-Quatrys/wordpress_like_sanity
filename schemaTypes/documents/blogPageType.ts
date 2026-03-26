@@ -207,13 +207,6 @@ export const blogPageType = defineType({
       description: "Chemin d'acces au blog. Ex : 'blog' donnera /blog, 'actualites' donnera /actualites",
       validation: (Rule) => Rule.required(),
     }),
-    defineField({
-      name: "isPublished",
-      title: "Visible sur le site",
-      type: "boolean",
-      group: "settings",
-      initialValue: true,
-    }),
   ],
   preview: {
     select: {

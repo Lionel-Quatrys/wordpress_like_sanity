@@ -1,11 +1,15 @@
 import { UsersIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { isModuleEnabled } from "../../../src/moduleCache";
 
 export const teamSectionType = defineType({
   name: "teamSection",
   title: "Section equipe",
   type: "object",
   icon: UsersIcon,
+  hidden: ({ currentUser }) =>
+    !currentUser?.roles?.some((r: any) => r.name === "administrator") &&
+    !isModuleEnabled("team"),
   fields: [
     defineField({
       name: "title",

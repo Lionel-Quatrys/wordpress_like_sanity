@@ -80,10 +80,16 @@ Les singletons ont un `_id` fixe et ne s'interrogent **pas** par slug.
 
 ```groq
 // themeSettings
+// Les couleurs sont des objets { hex, rgb, hsl, alpha } — utiliser .hex côté front
 *[_id == "themeSettings"][0] {
-  primaryColor, secondaryColor, accentColor,
-  backgroundColor, surfaceColor,
-  textColor, mutedTextColor, borderColor,
+  "primaryColor": primaryColor.hex,
+  "secondaryColor": secondaryColor.hex,
+  "accentColor": accentColor.hex,
+  "backgroundColor": backgroundColor.hex,
+  "surfaceColor": surfaceColor.hex,
+  "textColor": textColor.hex,
+  "mutedTextColor": mutedTextColor.hex,
+  "borderColor": borderColor.hex,
   headingFont, bodyFont,
   h1Size, h2Size, h3Size, bodySize,
   headingWeight, lineHeight,
@@ -123,7 +129,6 @@ Les singletons ont un `_id` fixe et ne s'interrogent **pas** par slug.
 
 ```groq
 *[_id == "homepage"][0] {
-  isPublished,
   content[] { ...sectionFields },  // voir section "Page builder" ci-dessous
   featuredPosts[]-> { _id, title, excerpt, "slug": slug.current, publishedAt, mainImage { "url": image.asset->url, alt }, "author": author->{ name }, "categories": categories[]->{ title } },
   showLatestPosts, latestPostsCount,
@@ -151,10 +156,10 @@ Si `showLatestPosts == true`, charger séparément :
 
 ```groq
 // Liste des slugs (pour generateStaticParams / getStaticPaths)
-*[_type == "page" && isPublished == true] { "slug": slug.current }
+*[_type == "page"] { "slug": slug.current }
 
 // Détail d'une page
-*[_type == "page" && slug.current == $slug && isPublished == true][0] {
+*[_type == "page" && slug.current == $slug][0] {
   title,
   content[] { ...sectionFields },
   seo { metaTitle, metaDescription, ogTitle, ogDescription, "ogImageUrl": ogImage.image.asset->url, noIndex, canonicalUrl, twitterCardType },
@@ -562,7 +567,7 @@ Générer `/sitemap.xml` en agrégeant :
 [
   *[_id == "homepage"][0] { "slug": "/", sitemapPriority, sitemapChangefreq, _updatedAt },
   *[_id == "blogPage"][0] { "slug": "/" + slug.current, sitemapPriority, sitemapChangefreq, _updatedAt },
-  *[_type == "page" && isPublished == true] { "slug": "/" + slug.current, sitemapPriority, sitemapChangefreq, _updatedAt },
+  *[_type == "page"] { "slug": "/" + slug.current, sitemapPriority, sitemapChangefreq, _updatedAt },
   *[_type == "post"] { "slug": "/" + $blogSlug + "/" + slug.current, sitemapPriority, sitemapChangefreq, _updatedAt }
 ]
 ```
@@ -670,3 +675,5 @@ export function estimateReadTime(portableTextContent: any[]): number {
 | Date | Modification Sanity |
 |---|---|
 | 2026-03-24 | Création initiale — homepage, pages, posts, blog, 404, header, footer, siteSettings, themeSettings, toutes les sections |
+| 2026-03-26 | themeSettings — champs couleurs migrés de `string` (hex) vers `color` (@sanity/color-input) ; requête GROQ mise à jour avec `.hex` |
+| 2026-03-26 | Suppression du champ `isPublished` (Visible sur le site) sur homepage, page et blogPage ; requêtes GROQ mises à jour en conséquence |

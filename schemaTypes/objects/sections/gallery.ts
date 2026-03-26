@@ -1,9 +1,13 @@
 import { defineField, defineType } from "sanity";
+import { isModuleEnabled } from "../../../src/moduleCache";
 
 export const gallerySectionType = defineType({
   name: "gallerySection",
   title: "Galerie",
   type: "object",
+  hidden: ({ currentUser }) =>
+    !currentUser?.roles?.some((r: any) => r.name === "administrator") &&
+    !isModuleEnabled("gallery"),
   fields: [
     defineField({
       name: "title",

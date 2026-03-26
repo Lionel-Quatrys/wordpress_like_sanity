@@ -1,9 +1,13 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { isModuleEnabled } from "../../../src/moduleCache";
 
 export const pricingSectionType = defineType({
   name: "pricingSection",
   title: "Section tarifs",
   type: "object",
+  hidden: ({ currentUser }) =>
+    !currentUser?.roles?.some((r: any) => r.name === "administrator") &&
+    !isModuleEnabled("pricing"),
   fields: [
     defineField({
       name: "title",

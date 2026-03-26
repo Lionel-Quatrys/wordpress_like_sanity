@@ -1,11 +1,15 @@
 import { EnvelopeIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { isModuleEnabled } from "../../../src/moduleCache";
 
 export const contactSectionType = defineType({
   name: "contactSection",
   title: "Section contact",
   type: "object",
   icon: EnvelopeIcon,
+  hidden: ({ currentUser }) =>
+    !currentUser?.roles?.some((r: any) => r.name === "administrator") &&
+    !isModuleEnabled("contact"),
   groups: [
     { name: "content", title: "Contenu", default: true },
     { name: "form", title: "Formulaire" },
