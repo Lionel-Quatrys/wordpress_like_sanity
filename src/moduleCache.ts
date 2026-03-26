@@ -23,6 +23,6 @@ export const moduleCache: ModuleCacheState = {
 };
 
 export function isModuleEnabled(module: ModuleKey): boolean {
-  if (!moduleCache.loaded) return true;
-  return moduleCache.settings[module] !== false;
+  if (!moduleCache.loaded) return false;
+  return moduleCache.settings[module] === true;
 }

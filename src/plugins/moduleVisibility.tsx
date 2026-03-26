@@ -11,7 +11,7 @@ function ModuleVisibilityProvider(props: {
   useEffect(() => {
     // Chargement initial
     client
-      .fetch(`*[_id == "moduleSettings"][0]`)
+      .fetch(`*[_id in ["moduleSettings", "drafts.moduleSettings"]] | order(_id asc) [0]`)
       .then((settings: any) => {
         if (settings) moduleCache.settings = settings;
       })
@@ -23,7 +23,7 @@ function ModuleVisibilityProvider(props: {
 
     // Rechargement automatique quand l'admin modifie les modules
     const subscription = client
-      .listen(`*[_id == "moduleSettings"]`, {}, { visibility: "query" })
+      .listen(`*[_id in ["moduleSettings", "drafts.moduleSettings"]]`, {}, { visibility: "query" })
       .subscribe(() => {
         window.location.reload();
       });
