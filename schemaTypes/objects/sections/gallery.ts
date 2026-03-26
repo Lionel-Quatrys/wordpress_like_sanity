@@ -6,7 +6,7 @@ export const gallerySectionType = defineType({
   title: "Galerie",
   type: "object",
   hidden: ({ currentUser }) =>
-    !currentUser?.roles?.some((r: any) => r.name === "administrator") &&
+    !currentUser?.roles?.some((r: any) => r.name === "editor") &&
     !isModuleEnabled("gallery"),
   fields: [
     defineField({

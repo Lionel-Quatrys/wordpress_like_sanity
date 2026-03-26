@@ -8,7 +8,7 @@ export const testimonialsSectionType = defineType({
   type: "object",
   icon: StarIcon,
   hidden: ({ currentUser }) =>
-    !currentUser?.roles?.some((r: any) => r.name === "administrator") &&
+    !currentUser?.roles?.some((r: any) => r.name === "editor") &&
     !isModuleEnabled("testimonials"),
   fields: [
     defineField({

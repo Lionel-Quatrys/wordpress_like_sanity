@@ -16,8 +16,8 @@ import type { StructureBuilder } from "sanity/desk";
 import { isModuleEnabled } from "./moduleCache";
 
 export const deskStructure = (S: StructureBuilder, context: any) => {
-  const isAdmin = context.currentUser?.roles?.some(
-    (r: any) => r.name === "administrator",
+  const isAdmin = !context.currentUser?.roles?.some(
+    (r: any) => r.name === "editor",
   );
 
   const can = (module: Parameters<typeof isModuleEnabled>[0]) =>

@@ -6,7 +6,7 @@ export const pricingSectionType = defineType({
   title: "Section tarifs",
   type: "object",
   hidden: ({ currentUser }) =>
-    !currentUser?.roles?.some((r: any) => r.name === "administrator") &&
+    !currentUser?.roles?.some((r: any) => r.name === "editor") &&
     !isModuleEnabled("pricing"),
   fields: [
     defineField({

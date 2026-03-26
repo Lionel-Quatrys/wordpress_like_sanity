@@ -8,7 +8,7 @@ export const teamSectionType = defineType({
   type: "object",
   icon: UsersIcon,
   hidden: ({ currentUser }) =>
-    !currentUser?.roles?.some((r: any) => r.name === "administrator") &&
+    !currentUser?.roles?.some((r: any) => r.name === "editor") &&
     !isModuleEnabled("team"),
   fields: [
     defineField({

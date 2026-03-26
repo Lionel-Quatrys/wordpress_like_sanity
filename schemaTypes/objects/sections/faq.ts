@@ -6,7 +6,7 @@ export const faqSectionType = defineType({
   title: "FAQ",
   type: "object",
   hidden: ({ currentUser }) =>
-    !currentUser?.roles?.some((r: any) => r.name === "administrator") &&
+    !currentUser?.roles?.some((r: any) => r.name === "editor") &&
     !isModuleEnabled("faq"),
   fields: [
     defineField({

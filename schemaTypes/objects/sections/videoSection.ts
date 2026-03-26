@@ -8,7 +8,7 @@ export const videoSectionType = defineType({
   type: "object",
   icon: PlayIcon,
   hidden: ({ currentUser }) =>
-    !currentUser?.roles?.some((r: any) => r.name === "administrator") &&
+    !currentUser?.roles?.some((r: any) => r.name === "editor") &&
     !isModuleEnabled("video"),
   fields: [
     defineField({

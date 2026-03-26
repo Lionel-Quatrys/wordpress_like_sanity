@@ -8,7 +8,7 @@ export const contactSectionType = defineType({
   type: "object",
   icon: EnvelopeIcon,
   hidden: ({ currentUser }) =>
-    !currentUser?.roles?.some((r: any) => r.name === "administrator") &&
+    !currentUser?.roles?.some((r: any) => r.name === "editor") &&
     !isModuleEnabled("contact"),
   groups: [
     { name: "content", title: "Contenu", default: true },
