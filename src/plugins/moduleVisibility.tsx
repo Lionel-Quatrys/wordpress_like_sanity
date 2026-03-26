@@ -9,6 +9,7 @@ function ModuleVisibilityProvider(props: {
   const client = useClient({ apiVersion: "2024-01-01" });
 
   useEffect(() => {
+    // Chargement initial
     client
       .fetch(`*[_id == "moduleSettings"][0]`)
       .then((settings: any) => {
@@ -19,6 +20,15 @@ function ModuleVisibilityProvider(props: {
         moduleCache.loaded = true;
         setLoaded(true);
       });
+
+    // Rechargement automatique quand l'admin modifie les modules
+    const subscription = client
+      .listen(`*[_id == "moduleSettings"]`, {}, { visibility: "query" })
+      .subscribe(() => {
+        window.location.reload();
+      });
+
+    return () => subscription.unsubscribe();
   }, [client]);
 
   if (!loaded) {
