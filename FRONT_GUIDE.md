@@ -246,6 +246,13 @@ count(*[_type == "post"])
 
 Chaque section possède un champ `_type`. Le front doit router selon ce `_type` :
 
+> **Note sur les aliases GROQ** : certains noms de champs Sanity diffèrent des props utilisées côté front. Les alias sont appliqués dans `sectionFields` de `queries.ts` :
+> - `textSection.body` → aliasé en `content`
+> - `ctaSection.text` → aliasé en `description`
+> - `ctaSection.button` → aliasé en `cta`
+> - `imageSection` utilise `alignment` (left/center/right), pas `fullWidth`
+> - `faqSection.items[].answer` est du **PortableText** (richText), pas un string
+
 ```tsx
 // PageBuilder.tsx
 const sectionComponents: Record<string, React.ComponentType<any>> = {
@@ -289,14 +296,16 @@ export function PageBuilder({ sections }: { sections: any[] }) {
 #### `textSection`
 | Champ | Type | Notes |
 |---|---|---|
-| `content` | PortableText | Rendu avec `@portabletext/react` |
+| `title` | string | Optionnel |
+| `content` | PortableText | Aliasé depuis `body` dans GROQ — rendu avec `@portabletext/react` |
 
 #### `imageSection`
 | Champ | Type | Notes |
 |---|---|---|
+| `title` | string | Optionnel |
 | `image` | imageWithAlt | |
 | `caption` | string | Légende optionnelle |
-| `fullWidth` | boolean | |
+| `alignment` | `"left"` \| `"center"` \| `"right"` | Alignement de l'image dans le container |
 
 #### `videoSection`
 | Champ | Type | Notes |
@@ -322,14 +331,14 @@ Extraire l'ID de la vidéo depuis l'URL pour construire l'embed :
 | Champ | Type | Notes |
 |---|---|---|
 | `title` | string | |
-| `description` | string | Optionnel |
-| `cta` | link | |
+| `description` | string | Optionnel — aliasé depuis `text` dans GROQ |
+| `cta` | link | Aliasé depuis `button` dans GROQ |
 
 #### `faqSection`
 | Champ | Type | Notes |
 |---|---|---|
 | `title` | string | |
-| `items` | `{ question, answer }[]` | Accordéon |
+| `items` | `{ question: string, answer: PortableText[] }[]` | Accordéon — `answer` est du richText, rendu avec `@portabletext/react` |
 
 #### `pricingSection`
 | Champ | Type | Notes |
