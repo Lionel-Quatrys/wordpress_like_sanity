@@ -102,7 +102,7 @@ export const pageType = defineType({
   preview: {
     select: {
       title: "title",
-      slug: "slug.current",
+      slug: "slug.current.current",
       sectionCount: "content",
     },
     prepare: ({ title, slug, sectionCount }) => ({
